@@ -3,18 +3,22 @@
 //array of people
 
 float k, y; 
-float cloudX=30;
-float cloudY=20;
+
+
 float stand;
 int spacing=100;
 int many=8;
+
+float sky;
+float cloudX = 100, cloudY = 50;
+float mCloud = 1;
+float nCloud=8;
 
 String title= "Project 5";
 String subtitle=  "Press 't' key to move tallest to end.";
 String author=  "Kelly Hernandez, CST112";
 
 
-// This is an array of person
 
 Person [] human = new Person [many];
 //SETUP: define screen size//
@@ -30,7 +34,7 @@ void setup() {
 
 
 void reset() {
-  for (int i=0; i<many; i++) {
+  for (int i=0; i<many; i+=1) {
     human[i]=new Person ();
   }
 }
@@ -85,13 +89,24 @@ void keyPressed() {
 }
 
 void cloud() {
-  noStroke();
-  fill(255);
-  ellipse ( cloudX+50, cloudY+30, 50, 30);        //cloud  
-  if (cloudX > width) { 
-    cloudX=0;
+  fill(255, 255, 255);
+
+  float tempX = cloudX, tempY = cloudY, tempW = 60, tempH = 25;
+
+  for (int j=0; j < nCloud; j+=1) {  // Loop forthe clouds
+    ellipse(tempX, tempY, tempW, tempH);
+    tempX = tempX - tempW;
+    tempY = tempY + tempH;
+    tempW *= 0.7;  //last two clouds
+    tempH *= 0.7;
   }
-  cloudX= cloudX +1;
+  cloudX = cloudX + mCloud;   // Movement cloud
+
+  if (cloudX > width + 200) {  // Resets cloud at a random height
+    cloudX = 0;
+    cloudY = random(0, sky);
+    nCloud = random(1, 8);
+  }
 }
 //CLASS DEFINITIONS///
 
